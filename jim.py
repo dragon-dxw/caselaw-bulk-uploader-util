@@ -1,36 +1,18 @@
-import boto3
+import boto3, botocore
 from botocore.config import Config
-import environ
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
-# reading .env file
-environ.Env.read_env()
 
-session = boto3.Session(
-    aws_access_key_id=env('AWS_ACCESS_KEY'),
-    aws_secret_access_key=env('AWS_SECRET_ACCESS_KEY'),
-)
+aws = boto3.session.Session()
 
-my_config = Config(
-    region_name = 'eu-west-2',
-    signature_version = 'v4',
-    retries = {
-        'max_attempts': 10,
-        'mode': 'standard'
-    }
-)
-
-
-s3_client = session.client('s3', config=my_config)
+s3_client = aws.client("s3",
+    endpoint_url=f'https://s3.eu-west-2.amazonaws.com',)
 
 def get_presigned_key(object):
   BUCKET = 'jim-bulk-data-upload'
   url = s3_client.generate_presigned_url(
       'get_object',
       Params={'Bucket': BUCKET, 'Key': object},
-      ExpiresIn=300)
+      #ExpiresIn=300
+      )
   return(url)
 
 print(get_presigned_key("sample.txt"))
