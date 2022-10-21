@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "jim-util"
+version = "0.1.0"
+description = ""
+authors = ["David McKee <dragon@dxw.com>"]
+readme = "README.md"
+packages = [{include = "jim_util"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+boto3 = "^1.24.95"
+django-environ = "^0.9.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
