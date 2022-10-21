@@ -1,0 +1,1 @@
+aws s3 cp files s3://jim-bulk-data-upload/ --recursive
